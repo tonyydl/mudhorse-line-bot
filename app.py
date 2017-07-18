@@ -68,7 +68,7 @@ def androidweekly():
 def handle_message(event):
     if event.message.text == 'androidweekly':
         content = androidweekly()
-        print content
+        print (content)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
