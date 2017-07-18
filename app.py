@@ -47,7 +47,7 @@ def callback():
     except InvalidSignatureError:
         abort(400)
 
-    return 200
+    return 'OK'
 
 def androidweekly():
     target_url = 'http://androidweekly.net'
