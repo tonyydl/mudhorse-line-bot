@@ -1,6 +1,10 @@
 import os
 import sys
+import requests
+import re
+import random
 
+from bs4 import BeautifulSoup
 from flask import Flask, request, abort
 
 from linebot import (
@@ -43,15 +47,34 @@ def callback():
     except InvalidSignatureError:
         abort(400)
 
-    return 'OK'
+    return 200
 
+def androidweekly():
+    target_url = 'http://androidweekly.net'
+    rs = requests.session()
+    res = rs.get(target_url, verify=False)
+    soup = BeautifulSoup(res.text, 'html.parser')
+    content = ''
+
+    for item in soup.select('.latest-stuff .latest-issue .rahmen .sections .article-headline'):
+        print (item.text)
+        title = item.text
+        link = item['href']
+        data = '{}\n{}\n\n'.format(title, link)
+        content += data
+    return content
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    if event.message.text = 'androidweekly':
+        content = androidweekly()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
-
 
 if __name__ == "__main__":
     app.run()
