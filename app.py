@@ -56,11 +56,15 @@ def androidweekly():
     soup = BeautifulSoup(res.text, 'html.parser')
     content = ''
 
+    cnt = 0
     for item in soup.select('.latest-stuff .latest-issue .rahmen .sections .article-headline'):
         title = item.text
         link = item['href']
         data = '{}\n{}\n\n'.format(title, link)
         content += data
+        cnt += 1
+        if cnt >= 5
+            break
     return content
 
 @handler.add(MessageEvent, message=TextMessage)
