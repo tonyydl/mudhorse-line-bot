@@ -63,7 +63,7 @@ def androidweekly():
         data = '{}\n{}\n\n'.format(title, link)
         content += data
         cnt += 1
-        if cnt >= 5
+        if cnt >= 5:
             break
     return content
 
