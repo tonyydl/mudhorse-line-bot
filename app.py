@@ -57,7 +57,6 @@ def androidweekly():
     content = ''
 
     for item in soup.select('.latest-stuff .latest-issue .rahmen .sections .article-headline'):
-        print (item.text)
         title = item.text
         link = item['href']
         data = '{}\n{}\n\n'.format(title, link)
