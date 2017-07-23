@@ -6,3 +6,7 @@
 LINEID: @sgc9537d
 
 ![](mudhorse_qrcode.png)
+
+### 指令
+
+androidweekly --> 爬androidweekly.net當週前5筆新文章
