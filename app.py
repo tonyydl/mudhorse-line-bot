@@ -87,6 +87,8 @@ def rent591_datalist_tostring():
     data = rent591_datalist()
     # print (len(data['data']['data']))
     items = data['data']['data']
+
+    cnt = 0
     content = ''
     for item in items:
         title = item['address_img']
@@ -96,6 +98,9 @@ def rent591_datalist_tostring():
         price = item['price']
         link = "https://rent.591.com.tw/rent-detail-{}.html".format(item['id'])
         content += "{}\n{}\n{}\n{}\n{}\n{}\n\n".format(title, layout, kind_name, fulladdress, price, link)
+        cnt += 1
+        if cnt >= 5:
+            break;
     return content
 
 @handler.add(MessageEvent, message=TextMessage)
