@@ -6,6 +6,7 @@ import random
 
 from bs4 import BeautifulSoup
 from flask import Flask, request, abort
+from rent591 import *
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -67,8 +68,9 @@ def androidweekly():
             break
     return content
 
-def rent591_datalist():
-    target_url = 'https://rent.591.com.tw/home/search/rsList?is_new_list=1&type=1&kind=1&searchtype=1&region=3&section=43&rentprice=10000,23000&floor=0,0'
+def rent591_datalist(argu):
+    arguContent = getArgumentsContent(argu[1:])
+    target_url = 'https://rent.591.com.tw/home/search/rsList?is_new_list=1&' + arguContent
     header = {
             'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',
             'Accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -81,13 +83,11 @@ def rent591_datalist():
     }
     res = requests.Session()
     req = res.get(target_url, headers=header)
-    return req.json()
+    data = req.json()
+    return data['data']['data']
 
-def rent591_datalist_tostring():
-    data = rent591_datalist()
-    # print (len(data['data']['data']))
-    items = data['data']['data']
-
+def rent591_datalist_tostring(items):
+    limit = 5
     cnt = 0
     content = ''
     for item in items:
@@ -99,21 +99,25 @@ def rent591_datalist_tostring():
         link = "https://rent.591.com.tw/rent-detail-{}.html".format(item['id'])
         content += "{}\n{}\n{}\n{}\n{}\n{}\n\n".format(title, layout, kind_name, fulladdress, price, link)
         cnt += 1
-        if cnt >= 5:
+        if cnt >= limit:
             break;
     return content
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if event.message.text == 'androidweekly':
+    event_message = event.message.text.strip().split(' ')
+    main_action = event_message[0]
+    if main_action == 'androidweekly':
         content = androidweekly()
         print (content)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
         return 0
-    if event.message.text == '591三重':
-        content = rent591_datalist_tostring()
+    if main_action == '591':
+        argu = event_message[1:]
+        items = rent591_datalist(argu)
+        content = rent591_datalist_tostring(items)
         print (content)
         line_bot_api.reply_message(
             event.reply_token,

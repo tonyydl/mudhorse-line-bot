@@ -87,3 +87,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# For test
+arr.py
+test_crawler_591.py
