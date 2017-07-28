@@ -69,7 +69,7 @@ def androidweekly():
     return content
 
 def rent591_datalist(argu):
-    arguContent = getArgumentsContent(argu[1:])
+    arguContent = getArgumentsContent(argu)
     print (arguContent)
     target_url = 'https://rent.591.com.tw/home/search/rsList?is_new_list=1&' + arguContent
     header = {
