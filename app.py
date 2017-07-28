@@ -70,6 +70,7 @@ def androidweekly():
 
 def rent591_datalist(argu):
     arguContent = getArgumentsContent(argu[1:])
+    print (arguContent)
     target_url = 'https://rent.591.com.tw/home/search/rsList?is_new_list=1&' + arguContent
     header = {
             'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',
