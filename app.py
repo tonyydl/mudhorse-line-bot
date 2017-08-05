@@ -131,6 +131,7 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text='找不到物件。'))
+            return 0
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
