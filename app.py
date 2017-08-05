@@ -127,6 +127,10 @@ def handle_message(event):
         items = rent_591_object_list(argu)
         content = rent_591_object_list_tostring(items)
         print(content)
+        if content == '':
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text='找不到物件。'))
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
