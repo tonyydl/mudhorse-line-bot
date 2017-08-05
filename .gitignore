@@ -91,3 +91,5 @@ ENV/
 # For test
 arr.py
 test_crawler_591.py
+
+.idea
