@@ -153,4 +153,4 @@ def get_arguments_content(lists):
                     break;
                 content += k + '=' + input_value + '&'
                 break
-    return content[:-1] if content[-1] == '&' else content
+    return content[:-1] if len(content) > 0 and content[-1] == '&' else content
