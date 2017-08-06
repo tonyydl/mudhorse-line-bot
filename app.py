@@ -72,6 +72,8 @@ def androidweekly():
 def rent_591_object_list(argu):
     print(argu)
     argu_content = get_arguments_content(argu)
+    if argu_content == '':
+        return []
     print(argu_content)
     target_url = 'https://rent.591.com.tw/home/search/rsList?is_new_list=1&' + argu_content
     print(target_url)

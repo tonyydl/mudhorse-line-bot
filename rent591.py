@@ -145,12 +145,12 @@ def get_arguments_content(lists):
                     place_arg = get_place_arg(input_value)
                     if place_arg != '':
                         content += place_arg + '&'
-                    break;
+                    break
                 if k == 'kind':
                     kind_arg = get_kind_arg(input_value)
                     if kind_arg != '':
                         content += kind_arg + '&'
-                    break;
+                    break
                 content += k + '=' + input_value + '&'
                 break
     return content[:-1] if len(content) > 0 and content[-1] == '&' else content
