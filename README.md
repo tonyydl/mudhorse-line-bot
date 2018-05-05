@@ -1,5 +1,6 @@
-草尼馬 Line Bot
-===============
+# 草尼馬 Line Bot
+
+[![codebeat badge](https://codebeat.co/badges/8606dde5-df3a-4bae-beb5-0c8b46f48ac3)](https://codebeat.co/projects/github-com-tonyyang924-mudhorse-line-bot-master)
 
 <img src="./mudhorse.jpg" width="256" height="256" />
 
