@@ -1,4 +1,4 @@
-# 草尼馬 Line Bot
+# 草尼馬之我要租房
 
 [![codebeat badge](https://codebeat.co/badges/8606dde5-df3a-4bae-beb5-0c8b46f48ac3)](https://codebeat.co/projects/github-com-tonyyang924-mudhorse-line-bot-master)
 
@@ -8,9 +8,6 @@
 <img src="./mudhorse_qrcode.png" width="256" height="256" />
 
 ## 指令
-
-### androidweekly
-爬androidweekly.net當週前5筆新文章。
 
 ### 591
 爬591租屋網的物件，每次回更新時間最新的前五筆。
