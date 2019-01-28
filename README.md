@@ -55,6 +55,10 @@
 
 * **Tony Yang** - initial & develop basic feature - [tonyyang924](https://github.com/tonyyang924)
 
+## Feedback
+
+[Create an issue](https://github.com/tonyyang924/mudhorse-line-bot/issues) for all discussions, bugs, feature requests and pull requests.
+
 ## License
 
 This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details
