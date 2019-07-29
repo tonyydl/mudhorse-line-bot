@@ -2,6 +2,9 @@
 
 [![codebeat badge](https://codebeat.co/badges/8606dde5-df3a-4bae-beb5-0c8b46f48ac3)](https://codebeat.co/projects/github-com-tonyyang924-mudhorse-line-bot-master)
 
+This line-bot built for the tenant who can ask line-bot specific keyword to grab rental information from 591-website. 
+* Developed this line bot crawler with python and use LINE Messaging API SDK for python. Deploy python flask backend code to Heroku and set up line secret and access token in Heroku environments. Set webhook to Heroku URL from the line manager project. Through the webhook, the Heroku backend can receive the message that user said to the robot.
+
 ### LINEID： @sgc9537d
 
 <img src="./mudhorse.jpg" width="256" height="256" />
