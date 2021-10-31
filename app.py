@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from json.decoder import JSONDecodeError
 import os
 import sys
 
@@ -56,9 +57,14 @@ def handle_message(event):
     main_action = event_message[0]
     if main_action == '591':
         argu = event_message[1:]
-        items = rent_591_object_list(argu)
-        content = rent_591_object_list_tostring(items)
-        print(content)
+        try:
+            items = rent_591_object_list(argu)
+            content = rent_591_object_list_tostring(items)
+        except JSONDecodeError:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text='591爬蟲失敗'))
+            return 0
         if content == '':
             line_bot_api.reply_message(
                 event.reply_token,
@@ -67,6 +73,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
+
         return 0
     line_bot_api.reply_message(
         event.reply_token,
