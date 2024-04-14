@@ -54,11 +54,11 @@ This line-bot built for the tenant who can ask line-bot specific keyword to grab
 
 ## Author
 
-* **Tony Yang** - initial & develop basic feature - [tonyyangdev](https://github.com/tonyyangdev)
+* **Tony Yang** - initial & develop basic feature - [tonyydl](https://github.com/tonyydl)
 
 ## Feedback
 
-[Create an issue](https://github.com/tonyyangdev/mudhorse-line-bot/issues) for all discussions, bugs, feature requests and pull requests.
+[Create an issue](https://github.com/tonyydl/mudhorse-line-bot/issues) for all discussions, bugs, feature requests and pull requests.
 
 ## License
 
