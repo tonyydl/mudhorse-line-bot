@@ -3,7 +3,6 @@ from json.decoder import JSONDecodeError
 import os
 import sys
 
-from bs4 import BeautifulSoup
 from flask import Flask, request, abort
 from rent591 import *
 
