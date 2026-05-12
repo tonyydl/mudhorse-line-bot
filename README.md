@@ -13,11 +13,9 @@ This line-bot built for the tenant who can ask line-bot specific keyword to grab
 ### 591
 爬591租屋網的物件，每次回更新時間最新的前五筆。
 
-<span style="color:red; font-weight: bold;">目前只支援雙北</span>
-
 ### 格式
 ```
-591 位置=[新北市,台北市,...,三重區,蘆洲區,大安區] 類型=[整層住家,獨立套房,分租套房,雅房,車位,其他] 租金=[最低價格,最高價格] 坪數=[最低坪數,最高坪數]
+591 位置=[台北市,新北市,台中市,高雄市,...,三重區,蘆洲區,大安區] 類型=[整層住家,獨立套房,分租套房,雅房,車位,其他] 租金=[最低價格,最高價格] 坪數=[最低坪數,最高坪數]
 ```
 
 ## 範例
@@ -39,10 +37,6 @@ This line-bot built for the tenant who can ask line-bot specific keyword to grab
 * 選擇類型
 * 選擇坪數
 * 租金範圍
-
-### Bugs
-
-* 目前除「新北市」外，其他縣市沒法正常搜尋，都會找不到物件。
 
 ## Contributing
 

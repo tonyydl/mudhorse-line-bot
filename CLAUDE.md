@@ -23,7 +23,10 @@ python app.py
 gunicorn app:app
 ```
 
-There are no tests.
+To test the scraper without LINE:
+```bash
+python3 test_search.py
+```
 
 ## Architecture
 
@@ -36,15 +39,11 @@ There are no tests.
 - `theEnum`: maps user-facing Chinese param names (`位置`, `類型`, `租金`, `坪數`) to API keys
 - `region` / `section` dicts: hardcoded lookup tables mapping city/district names to numeric IDs used by the 591 API
 - `kind` dict: maps rental type names to 591 kind IDs
-- `get_arguments_content()`: converts parsed user args into a 591 API query string
-- `rent_591_object_list()`: hits `https://rent.591.com.tw/home/search/rsList` with hardcoded headers/cookie, returns raw JSON items
+- `get_arguments_content()`: converts parsed user args into a 591 API query string (`regionid`, `sectionid`, `kind`, `rentprice`, `area`)
+- `rent_591_object_list()`: establishes a fresh session by visiting the main page (to get a valid `T591_TOKEN` cookie), then hits `https://bff-house.591.com.tw/v3/web/rent/list`, returns items
 - `rent_591_object_list_tostring()`: formats top 5 results into a LINE text message
 
-## Known Issues
-
-- The `Cookie` header in `rent591.py:rent_591_object_list()` is hardcoded and expired — the 591 API likely requires a valid session cookie to return results.
-- Only 新北市 (New Taipei City) searches work correctly; other cities return no results.
-- `bs4` / `BeautifulSoup` is imported in `app.py` but never used.
+**`test_search.py`** — Quick manual test script. Run `python3 test_search.py` to verify scraping without needing LINE.
 
 ## Deployment
 
