@@ -219,8 +219,10 @@ def _build_bubble(item):
     photo_list = item.get('photoList', [])
     hero = None
     if photo_list:
+        raw = photo_list[0]
+        img_url = 'https:' + raw if raw.startswith('//') else raw
         hero = ImageComponent(
-            url=photo_list[0],
+            url=img_url,
             size='full',
             aspect_ratio='20:13',
             aspect_mode='cover',
@@ -231,7 +233,7 @@ def _build_bubble(item):
         layout='vertical',
         contents=[
             TextComponent(
-                text=item.get('title', ''),
+                text=item.get('title') or '—',
                 weight='bold',
                 size='md',
                 wrap=True,
@@ -295,7 +297,7 @@ def _build_bubble(item):
         spacing='sm',
         contents=[
             TextComponent(
-                text=item.get('price', '') + ' ' + item.get('price_unit', '元/月'),
+                text=(item.get('price') or '—') + ' ' + item.get('price_unit', '元/月'),
                 weight='bold',
                 size='xl',
                 color='#1DB446',
