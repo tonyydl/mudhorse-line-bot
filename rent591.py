@@ -1,5 +1,11 @@
 import requests
 
+from linebot.models import (
+    FlexSendMessage, BubbleContainer, CarouselContainer,
+    ImageComponent, BoxComponent, TextComponent,
+    ButtonComponent, URIAction,
+)
+
 _BASE_URL = 'https://rent.591.com.tw'
 _SEARCH_URL = 'https://bff-house.591.com.tw/v3/web/rent/list'
 
@@ -206,3 +212,107 @@ def rent_591_object_list_tostring(items):
         if cnt >= limit:
             break
     return content
+
+
+def _build_bubble(item):
+    photo_list = item.get('photoList', [])
+    hero = None
+    if photo_list:
+        hero = ImageComponent(
+            url=photo_list[0],
+            size='full',
+            aspect_ratio='20:13',
+            aspect_mode='cover',
+            action=URIAction(label='查看詳情', uri=item.get('url', '')),
+        )
+
+    body = BoxComponent(
+        layout='vertical',
+        contents=[
+            TextComponent(
+                text=item.get('title', ''),
+                weight='bold',
+                size='md',
+                wrap=True,
+                max_lines=2,
+            ),
+            BoxComponent(
+                layout='vertical',
+                margin='md',
+                spacing='sm',
+                contents=[
+                    BoxComponent(
+                        layout='baseline',
+                        spacing='sm',
+                        contents=[
+                            TextComponent(text='📍', size='sm', flex=0),
+                            TextComponent(
+                                text=item.get('address', ''),
+                                wrap=True,
+                                size='sm',
+                                flex=5,
+                                color='#666666',
+                            ),
+                        ],
+                    ),
+                    BoxComponent(
+                        layout='baseline',
+                        spacing='sm',
+                        contents=[
+                            TextComponent(text='🏠', size='sm', flex=0),
+                            TextComponent(
+                                text='{} · {}'.format(
+                                    item.get('kind_name', ''),
+                                    item.get('area_name', ''),
+                                ),
+                                size='sm',
+                                flex=5,
+                                color='#666666',
+                            ),
+                        ],
+                    ),
+                    BoxComponent(
+                        layout='baseline',
+                        spacing='sm',
+                        contents=[
+                            TextComponent(text='🏢', size='sm', flex=0),
+                            TextComponent(
+                                text=item.get('floor_name', ''),
+                                size='sm',
+                                flex=5,
+                                color='#666666',
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+        ],
+    )
+
+    footer = BoxComponent(
+        layout='vertical',
+        spacing='sm',
+        contents=[
+            TextComponent(
+                text=item.get('price', '') + ' ' + item.get('price_unit', '元/月'),
+                weight='bold',
+                size='xl',
+                color='#1DB446',
+            ),
+            ButtonComponent(
+                style='primary',
+                height='sm',
+                action=URIAction(label='查看詳情', uri=item.get('url', '')),
+            ),
+        ],
+    )
+
+    return BubbleContainer(hero=hero, body=body, footer=footer)
+
+
+def build_flex_carousel(items):
+    bubbles = [_build_bubble(item) for item in items[:5]]
+    return FlexSendMessage(
+        alt_text='591租屋搜尋結果',
+        contents=CarouselContainer(contents=bubbles),
+    )
