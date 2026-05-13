@@ -215,6 +215,7 @@ def rent_591_object_list_tostring(items):
 
 
 def _build_bubble(item):
+    _url = item.get('url') or 'https://rent.591.com.tw/{}'.format(item.get('id', ''))
     photo_list = item.get('photoList', [])
     hero = None
     if photo_list:
@@ -223,7 +224,7 @@ def _build_bubble(item):
             size='full',
             aspect_ratio='20:13',
             aspect_mode='cover',
-            action=URIAction(label='查看詳情', uri=item.get('url', '')),
+            action=URIAction(label='查看詳情', uri=_url),
         )
 
     body = BoxComponent(
@@ -302,7 +303,7 @@ def _build_bubble(item):
             ButtonComponent(
                 style='primary',
                 height='sm',
-                action=URIAction(label='查看詳情', uri=item.get('url', '')),
+                action=URIAction(label='查看詳情', uri=_url),
             ),
         ],
     )
@@ -311,6 +312,8 @@ def _build_bubble(item):
 
 
 def build_flex_carousel(items):
+    if not items:
+        return None
     bubbles = [_build_bubble(item) for item in items[:5]]
     return FlexSendMessage(
         alt_text='591租屋搜尋結果',
