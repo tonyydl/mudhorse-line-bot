@@ -58,21 +58,21 @@ def handle_message(event):
         argu = event_message[1:]
         try:
             items = rent_591_object_list(argu)
-            content = rent_591_object_list_tostring(items)
         except JSONDecodeError:
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text='591爬蟲失敗'))
             return 0
-        if content == '':
+
+        if not items:
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text='找不到物件。'))
             return 0
+
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=content))
-
+            build_flex_carousel(items))
         return 0
     line_bot_api.reply_message(
         event.reply_token,
