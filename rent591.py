@@ -1,4 +1,7 @@
 import requests
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from linebot.models import (
     FlexSendMessage, BubbleContainer, CarouselContainer,
@@ -181,6 +184,7 @@ def rent_591_object_list(argu):
             params[k] = v
 
     session = requests.Session()
+    session.verify = False
     session.headers.update({
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept-Language': 'zh-TW,zh;q=0.9',
