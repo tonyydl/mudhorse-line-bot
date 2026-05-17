@@ -15,8 +15,9 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
+from session import get_session
+from conversational import start_flow, handle_step
 
-# get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
 channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
 if channel_secret is None:
@@ -34,28 +35,35 @@ app = Flask(__name__)
 
 @app.route("/callback", methods=['POST'])
 def callback():
-    # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
-
-    # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-
-    # handle webhook body
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
-
     return 'OK'
 
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    event_message = event.message.text.strip().split(' ')
-    main_action = event_message[0]
+    text = event.message.text.strip()
+    uid = event.source.user_id
+
+    # Active conversational session takes priority
+    session = get_session(uid)
+    if session:
+        handle_step(line_bot_api, event, session, text)
+        return 0
+
+    parts = text.split(' ')
+    main_action = parts[0]
+
     if main_action == '591':
-        argu = event_message[1:]
+        argu = parts[1:]
+        if not argu:
+            start_flow(line_bot_api, event)
+            return 0
         try:
             items = rent_591_object_list(argu)
         except JSONDecodeError:
@@ -74,9 +82,10 @@ def handle_message(event):
             event.reply_token,
             build_flex_carousel(items))
         return 0
+
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text='無法辨識 「{0}」，範例：「591 位置=蘆洲區 類型=獨立套房 租金=5000,15000」，更多指令請參考 https://github.com/tonyyang924/mudhorse-line-bot'.format(event.message.text)))
+        TextSendMessage(text='無法辨識 「{0}」，範例：「591 位置=蘆洲區 類型=獨立套房 租金=5000,15000」，更多指令請參考 https://github.com/tonyyang924/mudhorse-line-bot'.format(text)))
 
 
 if __name__ == "__main__":
